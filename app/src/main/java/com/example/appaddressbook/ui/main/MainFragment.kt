@@ -1,43 +1,29 @@
 package com.example.appaddressbook.ui.main
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.appaddressbook.base.BaseBindingFragment
 import com.example.appaddressbook.databinding.FragmentMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainFragment : Fragment() {
+@AndroidEntryPoint
+class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
+    override val viewModel by viewModels<MainViewModel>()
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var binding: FragmentMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initUI() {
         setupListeners()
     }
 
     private fun setupListeners() {
-        binding.openContacts.setOnClickListener {
-            viewModel.loadContacts()
-        }
+        binding?.openContacts?.setOnClickListener { viewModel.loadContacts() }
+    }
+
+    override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
+        FragmentMainBinding.inflate(inflater, container, false)
+
+    companion object {
+        fun newInstance() = MainFragment()
     }
 }
