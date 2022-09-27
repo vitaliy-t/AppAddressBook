@@ -1,5 +1,6 @@
 package com.example.appaddressbook.di
 
+import com.example.appaddressbook.contacts_loader.ContactsExporter
 import com.example.appaddressbook.contacts_loader.ContactsLoader
 import com.example.appaddressbook.repository.ContactsRepository
 import com.example.appaddressbook.repository.ContactsRepositoryImpl
@@ -23,5 +24,11 @@ object AppModule {
     @Singleton
     fun provideContactLoader(): ContactsLoader {
         return ContactsLoader()
+    }
+
+    @Provides
+    @Singleton
+    fun provideContactExporter(): ContactsExporter {
+        return ContactsExporter()
     }
 }

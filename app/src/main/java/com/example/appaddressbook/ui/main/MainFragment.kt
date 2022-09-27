@@ -9,7 +9,9 @@ import com.example.appaddressbook.base.BaseBindingFragment
 import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.databinding.FragmentMainBinding
 import com.example.appaddressbook.ui.main.adapter.ContactsAdapter
+import com.example.appaddressbook.utils.onClick
 import com.example.appaddressbook.utils.setVisibleOrGone
+import com.example.appaddressbook.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,15 +33,18 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun setupListeners() = withBinding {
         rvContacts.adapter = adapter
-        ivImportContacts.setOnClickListener { pickContactsFile() }
+        ivImportContacts.onClick(::pickContactsFile)
+        ivExportContacts.onClick(viewModel::exportContacts)
     }
 
     private fun subscribe() {
         viewModel.getContacts().observe(viewLifecycleOwner) { displayContacts(it) }
+        viewModel.toastLiveEvent.observe(viewLifecycleOwner) { showToast(it) }
     }
 
     private fun displayContacts(contacts: List<Contact>) = withBinding {
         adapter.setData(contacts)
+        ivExportContacts.setVisibleOrGone(contacts.isNotEmpty())
         rvContacts.setVisibleOrGone(contacts.isNotEmpty())
         clNoContacts.setVisibleOrGone(contacts.isEmpty())
     }

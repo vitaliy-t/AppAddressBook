@@ -4,6 +4,9 @@
     <!--MainFragment-->
     <string name="label_contacts_book">Contacts book</string>
     <string name="open_contacts">Import contacts</string>
+    <string name="export_contacts">Export contacts</string>
+    <string name="exported_message">Contacts exported</string>
     <string name="label_no_contacts">Contacts are not imported.</string>
     <!--/MainFragment-->
+
 </resources>
