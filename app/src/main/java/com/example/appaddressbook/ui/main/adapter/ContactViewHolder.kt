@@ -12,15 +12,13 @@ class ContactViewHolder(
     private val onEditItemClick: (String) -> Unit,
 ) : ViewHolder(itemPasswordBinding.root) {
 
-    fun bindData(item: Contact?) {
+    fun bindData(contact: Contact) {
         itemPasswordBinding.apply {
-            item?.let { contact ->
-                tvContactName.text = contact.contactName
-                tvCompanyName.text = contact.companyName
-                ivDelete.onClick { onDeleteItemClick(contact) }
-                root.onClick { onItemClick(contact.customerId) }
-                ivEdit.onClick { onEditItemClick(contact.customerId) }
-            }
+            tvContactName.text = contact.contactName
+            tvCompanyName.text = contact.companyName
+            ivDelete.onClick { onDeleteItemClick(contact) }
+            root.onClick { onItemClick(contact.customerId) }
+            ivEdit.onClick { onEditItemClick(contact.customerId) }
         }
     }
 }
