@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appaddressbook.R
+import com.example.appaddressbook.contacts_loader.ContactsExporter
 import com.example.appaddressbook.contacts_loader.ContactsLoader
 import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.repository.ContactsRepository
@@ -17,7 +19,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository,
     private val contactsLoader: ContactsLoader,
+    private val contactsExporter: ContactsExporter,
 ) : ViewModel() {
+
+    val toastLiveEvent = SingleLiveEvent<Int>()
 
     fun getContacts() = contactsRepository.getContacts()
 
@@ -30,6 +35,15 @@ class MainViewModel @Inject constructor(
             val contacts = contactsLoader.loadContacts(context, uri)
             withContext(Dispatchers.Main) {
                 contactsRepository.setContacts(contacts)
+            }
+        }
+    }
+
+    fun exportContacts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            contactsRepository.getContacts().value?.let { contacts ->
+                contactsExporter.exportContacts(contacts)
+                toastLiveEvent.postValue(R.string.exported_message)
             }
         }
     }
