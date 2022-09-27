@@ -9,6 +9,10 @@ class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
 
     private val contactsLiveData = MutableLiveData<List<Contact>>(mutableListOf())
 
+    override fun setContacts(contacts: List<Contact>) {
+        contactsLiveData.value = contacts
+    }
+
     override fun getContacts(): LiveData<List<Contact>> {
         return contactsLiveData
     }
