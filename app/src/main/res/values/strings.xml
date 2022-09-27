@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">AppAddressBook</string>
 
+    <!--MainFragment-->
+    <string name="label_contacts_book">Contacts book</string>
     <string name="open_contacts">Import contacts</string>
+    <string name="label_no_contacts">Contacts are not imported.</string>
+    <!--/MainFragment-->
 </resources>
