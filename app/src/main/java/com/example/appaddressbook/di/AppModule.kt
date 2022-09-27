@@ -1,6 +1,5 @@
 package com.example.appaddressbook.di
 
-import com.example.appaddressbook.data.ContactsDataHolder
 import com.example.appaddressbook.repository.ContactsRepository
 import com.example.appaddressbook.repository.ContactsRepositoryImpl
 import dagger.Module
@@ -15,13 +14,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContactsRepository(contactsDataHolder: ContactsDataHolder): ContactsRepository {
-        return ContactsRepositoryImpl(contactsDataHolder)
-    }
-
-    @Provides
-    @Singleton
-    fun provideContactsDataHolder(): ContactsDataHolder {
-        return ContactsDataHolder
+    fun provideContactsRepository(): ContactsRepository {
+        return ContactsRepositoryImpl()
     }
 }

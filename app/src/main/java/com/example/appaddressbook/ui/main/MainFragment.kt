@@ -22,7 +22,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
     }
 
     private fun subscribe() {
-        viewModel.contactsLiveData.observe(this) { }
+        viewModel.getContacts().observe(viewLifecycleOwner) { }
     }
 
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =

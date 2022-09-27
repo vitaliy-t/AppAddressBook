@@ -1,22 +1,27 @@
 package com.example.appaddressbook.repository
 
-import com.example.appaddressbook.data.ContactsDataHolder
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.appaddressbook.data.models.Contact
 import javax.inject.Inject
 
-class ContactsRepositoryImpl @Inject constructor(
-    private val contactsDataHolder: ContactsDataHolder
-) : ContactsRepository {
-    override fun getContacts(): List<Contact> {
-        return contactsDataHolder.contacts
+class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
+
+    private val contactsLiveData = MutableLiveData<List<Contact>>(mutableListOf())
+
+    override fun getContacts(): LiveData<List<Contact>> {
+        return contactsLiveData
     }
 
     override fun addContact(contact: Contact) {
-        contactsDataHolder.contacts.add(contact)
+        val contacts = contactsLiveData.value ?: mutableListOf()
+        (contacts as MutableList).add(contact)
+        contactsLiveData.value = contacts
     }
 
     override fun updateContact(contact: Contact) {
-        contactsDataHolder.contacts.find { it.customerId == contact.customerId }?.apply {
+        val contacts = contactsLiveData.value ?: mutableListOf()
+        contacts.find { it.customerId == contact.customerId }?.apply {
             companyName = contact.companyName
             contactName = contact.contactName
             contactTitle = contact.contactTitle
@@ -29,9 +34,12 @@ class ContactsRepositoryImpl @Inject constructor(
             phone = contact.phone
             fax = contact.fax
         }
+        contactsLiveData.value = contacts
     }
 
     override fun deleteContact(contact: Contact) {
-        contactsDataHolder.contacts.remove(contact)
+        val contacts = contactsLiveData.value ?: mutableListOf()
+        (contacts as MutableList).remove(contact)
+        contactsLiveData.value = contacts
     }
 }
