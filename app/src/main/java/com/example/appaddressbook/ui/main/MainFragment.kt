@@ -14,10 +14,15 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun initUI() {
         setupListeners()
+        subscribe()
     }
 
     private fun setupListeners() {
         binding?.openContacts?.setOnClickListener { viewModel.loadContacts() }
+    }
+
+    private fun subscribe() {
+        viewModel.getContacts().observe(viewLifecycleOwner) { }
     }
 
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
