@@ -4,8 +4,9 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appaddressbook.repository.ContactsRepository
 import com.example.appaddressbook.contacts_loader.ContactsLoader
+import com.example.appaddressbook.data.models.Contact
+import com.example.appaddressbook.repository.ContactsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,10 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getContacts() = contactsRepository.getContacts()
+
+    fun onContactDelete(contact: Contact) {
+        contactsRepository.deleteContact(contact)
+    }
 
     fun loadContacts(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {

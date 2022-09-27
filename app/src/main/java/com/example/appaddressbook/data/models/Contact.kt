@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName
 @JsonRootName("Contact")
 class Contact(
     @set:JsonProperty("CustomerID")
-    var customerId: String? = null,
+    var customerId: String,
 
     @set:JsonProperty("CompanyName")
     var companyName: String? = null,
