@@ -23,11 +23,15 @@ class ContactsLoader {
     }).registerKotlinModule()
 
 
-    fun loadContacts(context: Context, uri: Uri): List<Contact> {
-        val addressBook = kotlinXmlMapper.readValue(
-            context.contentResolver.openInputStream(uri), AddressBook::class.java
-        )
-        return addressBook.contacts
+    fun loadContacts(context: Context, uri: Uri): List<Contact>? {
+        val addressBook = try {
+            kotlinXmlMapper.readValue(
+                context.contentResolver.openInputStream(uri), AddressBook::class.java
+            )
+        } catch (th: Throwable) {
+            null
+        }
+        return addressBook?.contacts
     }
 
 }

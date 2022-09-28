@@ -34,7 +34,11 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val contacts = contactsLoader.loadContacts(context, uri)
             withContext(Dispatchers.Main) {
-                contactsRepository.setContacts(contacts)
+                if (contacts != null) {
+                    contactsRepository.setContacts(contacts)
+                } else {
+                    toastLiveEvent.postValue(R.string.parse_xml_error)
+                }
             }
         }
     }
