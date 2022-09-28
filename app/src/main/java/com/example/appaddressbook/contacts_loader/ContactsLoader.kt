@@ -2,32 +2,18 @@ package com.example.appaddressbook.contacts_loader
 
 import android.content.Context
 import android.net.Uri
-import com.ctc.wstx.stax.WstxInputFactory
-import com.ctc.wstx.stax.WstxOutputFactory
-import com.example.appaddressbook.data.models.AddressBook
 import com.example.appaddressbook.data.models.Contact
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
-import com.fasterxml.jackson.dataformat.xml.XmlFactory
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import javax.inject.Inject
 
-class ContactsLoader {
-
-    private val xmlFactory = XmlFactory.builder()
-        .xmlInputFactory(WstxInputFactory())
-        .xmlOutputFactory(WstxOutputFactory())
-        .build()
-
-    private val kotlinXmlMapper = XmlMapper(xmlFactory, JacksonXmlModule().apply {
-        setDefaultUseWrapper(false)
-    }).registerKotlinModule()
-
+class ContactsLoader @Inject constructor (
+    private val xmlMapper: AddressBookXmlMapper
+) {
 
     fun loadContacts(context: Context, uri: Uri): List<Contact>? {
         val addressBook = try {
-            kotlinXmlMapper.readValue(
-                context.contentResolver.openInputStream(uri), AddressBook::class.java
-            )
+            context.contentResolver.openInputStream(uri)?.let {
+                xmlMapper.mapToAddressBook(it)
+            }
         } catch (th: Throwable) {
             null
         }
