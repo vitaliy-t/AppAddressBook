@@ -26,7 +26,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
     override val viewModel by viewModels<MainViewModel>()
     private val adapter by lazy {
         ContactsAdapter(
-            onItemClick = {},
+            onItemClick = { openContactDetails(it) },
             onDeleteItemClick = { viewModel.onContactDelete(it) },
             onEditItemClick = ::navigateToEditContact
         )
@@ -101,15 +101,15 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
     private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
     private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
 
+    private fun openContactDetails(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.openContactDetails(customerId))
+    }
+
     private fun navigateToAddingNewContact() {
         findNavController().navigate(MainFragmentDirections.toEditContact(null) )
     }
 
     private fun navigateToEditContact(customerId: String) {
         findNavController().navigate(MainFragmentDirections.toEditContact(customerId))
-    }
-
-    companion object {
-        fun newInstance() = MainFragment()
     }
 }

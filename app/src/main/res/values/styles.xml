@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleBoldBlack" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_20</item>
+    </style>
+
+    <style name="Subtitle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+
+    <style name="CommonText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+</resources>

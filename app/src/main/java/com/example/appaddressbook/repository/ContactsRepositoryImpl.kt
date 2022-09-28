@@ -17,7 +17,7 @@ class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
         return contactsLiveData
     }
 
-    override fun getContact(customerId: String): Contact? {
+    override fun getContactById(customerId: String): Contact? {
         return contactsLiveData.value?.find { it.customerId == customerId }
     }
 

@@ -7,7 +7,7 @@ interface ContactsRepository {
 
     fun setContacts(contacts: List<Contact>)
     fun getContacts(): LiveData<List<Contact>>
-    fun getContact(customerId: String): Contact?
+    fun getContactById(customerId: String) : Contact?
     fun addContact(contact: Contact)
     fun updateContact(contact: Contact)
     fun deleteContact(contact: Contact)
