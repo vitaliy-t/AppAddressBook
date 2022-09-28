@@ -8,7 +8,7 @@
     <string name="exported_to_xml_message">Contacts exported to XML file</string>
     <string name="exported_to_json_message">Contacts exported to JSON file</string>
     <string name="label_no_contacts">Contacts are not imported.</string>
-    <string name="search_hint">Search query</string>
+    <string name="search_hint">Search by name</string>
     <string name="parse_xml_error">Error while parsing XML file</string>
     <string name="parse_json_error">Error while parsing JSON file</string>
     <string name="xml_format">XML</string>
