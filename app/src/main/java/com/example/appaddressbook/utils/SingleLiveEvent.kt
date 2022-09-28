@@ -1,4 +1,4 @@
-package com.example.appaddressbook.ui.main
+package com.example.appaddressbook.utils
 
 import android.util.Log
 import androidx.annotation.MainThread

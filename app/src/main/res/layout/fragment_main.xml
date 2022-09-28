@@ -60,14 +60,27 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.example.appaddressbook.ui.custom_views.SearchView
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginHorizontal="@dimen/dimen_8"
+            app:layout_constraintTop_toBottomOf="@id/clHeader"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvContacts"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:paddingBottom="@dimen/dimen_80"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:supports_change_animations="@{false}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clHeader"
-            tools:listitem="@layout/item_contact" />
+            app:layout_constraintTop_toBottomOf="@id/search_input"
+            tools:listitem="@layout/item_contact"
+            tools:itemCount="15"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clNoContacts"
