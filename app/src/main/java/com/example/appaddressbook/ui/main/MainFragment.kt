@@ -70,8 +70,8 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun displayContacts(contacts: List<Contact>) = withBinding {
         adapter.setData(contacts)
-        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty())
-        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty())
+        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
+        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
         searchInput.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
         rvContacts.setVisibleOrGone(contacts.isNotEmpty())
         clNoContacts.setVisibleOrGone(contacts.isEmpty())
