@@ -1,5 +1,6 @@
 package com.example.appaddressbook.di
 
+import com.example.appaddressbook.contacts_loader.AddressBookJsonMapper
 import com.example.appaddressbook.contacts_loader.ContactsExporter
 import com.example.appaddressbook.contacts_loader.ContactsLoader
 import com.example.appaddressbook.contacts_loader.AddressBookXmlMapper
@@ -29,13 +30,25 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContactLoader(xmlMapper: AddressBookXmlMapper): ContactsLoader {
-        return ContactsLoader(xmlMapper)
+    fun provideJsonMapper(): AddressBookJsonMapper {
+        return AddressBookJsonMapper()
     }
 
     @Provides
     @Singleton
-    fun provideContactExporter(xmlMapper: AddressBookXmlMapper): ContactsExporter {
-        return ContactsExporter(xmlMapper)
+    fun provideContactLoader(
+        xmlMapper: AddressBookXmlMapper,
+        jsonMapper: AddressBookJsonMapper
+    ): ContactsLoader {
+        return ContactsLoader(xmlMapper, jsonMapper)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContactExporter(
+        xmlMapper: AddressBookXmlMapper,
+        jsonMapper: AddressBookJsonMapper
+    ): ContactsExporter {
+        return ContactsExporter(xmlMapper, jsonMapper)
     }
 }

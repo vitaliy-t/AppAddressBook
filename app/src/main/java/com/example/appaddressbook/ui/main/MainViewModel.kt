@@ -50,9 +50,9 @@ class MainViewModel @Inject constructor(
         contactsRepository.deleteContact(contact)
     }
 
-    fun loadContacts(context: Context, uri: Uri) {
+    fun loadContactsFromXml(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            val contacts = contactsLoader.loadContacts(context, uri)
+            val contacts = contactsLoader.loadContactsFromXml(context, uri)
             withContext(Dispatchers.Main) {
                 if (contacts != null) {
                     contactsRepository.setContacts(contacts)
@@ -63,11 +63,33 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun exportContacts() {
+    fun loadContactsFromJson(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            contactsRepository.getContacts().value?.let { contacts ->
-                contactsExporter.exportContacts(contacts)
-                toastLiveEvent.postValue(R.string.exported_message)
+            val contacts = contactsLoader.loadContactsFromJson(context, uri)
+            withContext(Dispatchers.Main) {
+                if (contacts != null) {
+                    contactsRepository.setContacts(contacts)
+                } else {
+                    toastLiveEvent.postValue(R.string.parse_json_error)
+                }
+            }
+        }
+    }
+
+    fun exportContactsToXml() {
+        viewModelScope.launch(Dispatchers.IO) {
+            contacts.value?.let { contacts ->
+                contactsExporter.exportContactsToXml(contacts)
+                toastLiveEvent.postValue(R.string.exported_to_xml_message)
+            }
+        }
+    }
+
+    fun exportContactsToJson() {
+        viewModelScope.launch(Dispatchers.IO) {
+            contacts.value?.let { contacts ->
+                contactsExporter.exportContactsToJson(contacts)
+                toastLiveEvent.postValue(R.string.exported_to_json_message)
             }
         }
     }
