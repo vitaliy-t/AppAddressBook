@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appaddressbook.base.BaseBindingFragment
@@ -25,7 +26,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         ContactsAdapter(
             onItemClick = {},
             onDeleteItemClick = { viewModel.onContactDelete(it) },
-            onEditItemClick = { }
+            onEditItemClick = ::navigateToEditContact
         )
     }
 
@@ -56,6 +57,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         ivImportContactsJson.onClick(::pickContactsJsonFile)
         ivExportContactsXml.onClick(viewModel::exportContactsToXml)
         ivExportContactsJson.onClick(viewModel::exportContactsToJson)
+        fabAddContact.onClick(::navigateToAddingNewContact)
         searchInput.onSearchQueryChanged(viewModel::setSearchQuery)
     }
 
@@ -96,6 +98,14 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
     private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
+
+    private fun navigateToAddingNewContact() {
+        findNavController().navigate(MainFragmentDirections.toEditContact(null) )
+    }
+
+    private fun navigateToEditContact(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.toEditContact(customerId))
+    }
 
     companion object {
         fun newInstance() = MainFragment()

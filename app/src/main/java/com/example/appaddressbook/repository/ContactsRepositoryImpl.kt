@@ -17,9 +17,13 @@ class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
         return contactsLiveData
     }
 
+    override fun getContact(customerId: String): Contact? {
+        return contactsLiveData.value?.find { it.customerId == customerId }
+    }
+
     override fun addContact(contact: Contact) {
         val contacts = contactsLiveData.value ?: mutableListOf()
-        (contacts as MutableList).add(contact)
+        (contacts as MutableList).add(0, contact)
         contactsLiveData.value = contacts
     }
 
