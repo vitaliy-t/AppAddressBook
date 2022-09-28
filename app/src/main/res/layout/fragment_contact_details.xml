@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.contact_details.ContactDetailsFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContactName"
+            style="@style/TitleBoldBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_marginTop="@dimen/dimen_8"
+            tools:text="John Daw" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_company_name" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvContactTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_contact_title" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_address" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_city" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_email" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_region" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvPostalCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_postal_code" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_country" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_phone" />
+
+        <com.example.appaddressbook.ui.custom_views.ContactFieldView
+            android:id="@+id/cfvFax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fieldContent="@string/label_fax" />
+
+    </LinearLayout>
+</ScrollView>

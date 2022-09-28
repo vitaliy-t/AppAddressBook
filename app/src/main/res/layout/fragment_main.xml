@@ -1,20 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MainFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60"
+            android:background="?colorPrimary"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_16"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/label_contacts_book"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivImportContactsXml"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImportContactsXml"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                app:layout_constraintEnd_toStartOf="@id/ivImportContactsJson"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_download"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivImportContactsXml"
+                app:layout_constraintEnd_toEndOf="@id/ivImportContactsXml"
+                app:layout_constraintTop_toTopOf="@id/ivImportContactsXml"
+                android:textColor="@color/white"
+                android:text="@string/xml_format"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImportContactsJson"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                app:layout_constraintEnd_toStartOf="@id/ivExportContactsXml"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_download"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivImportContactsJson"
+                app:layout_constraintEnd_toEndOf="@id/ivImportContactsJson"
+                app:layout_constraintTop_toTopOf="@id/ivImportContactsJson"
+                android:textColor="@color/white"
+                android:text="@string/json_format"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivExportContactsXml"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@id/ivExportContactsJson"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_export"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivExportContactsXml"
+                app:layout_constraintEnd_toEndOf="@id/ivExportContactsXml"
+                app:layout_constraintTop_toTopOf="@id/ivExportContactsXml"
+                android:textColor="@color/white"
+                android:text="@string/xml_format"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivExportContactsJson"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_export"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivExportContactsJson"
+                app:layout_constraintEnd_toEndOf="@id/ivExportContactsJson"
+                app:layout_constraintTop_toTopOf="@id/ivExportContactsJson"
+                android:textColor="@color/white"
+                android:text="@string/json_format"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.example.appaddressbook.ui.custom_views.SearchView
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginHorizontal="@dimen/dimen_8"
+            app:layout_constraintTop_toBottomOf="@id/clHeader"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContacts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:paddingBottom="@dimen/dimen_80"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:supports_change_animations="@{false}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_input"
+            tools:listitem="@layout/item_contact"
+            tools:itemCount="15"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clNoContacts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clHeader">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLock"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="@dimen/dimen_60"
+                android:src="@drawable/ic_contact"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:text="@string/label_no_contacts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivLock" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/dimen_16"
+            android:backgroundTint="?attr/colorAccent"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

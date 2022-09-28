@@ -1,31 +1,115 @@
 package com.example.appaddressbook.ui.main
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.content.res.Configuration
+import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.example.appaddressbook.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appaddressbook.base.BaseBindingFragment
+import com.example.appaddressbook.data.models.Contact
+import com.example.appaddressbook.databinding.FragmentMainBinding
+import com.example.appaddressbook.ui.main.adapter.ContactsAdapter
+import com.example.appaddressbook.utils.onClick
+import com.example.appaddressbook.utils.registererFilePicker
+import com.example.appaddressbook.utils.setVisibleOrGone
+import com.example.appaddressbook.utils.showToast
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainFragment : Fragment() {
+private const val SPAN_COLUMN_FOR_LANDSCAPE = 2
 
-    companion object {
-        fun newInstance() = MainFragment()
+@AndroidEntryPoint
+class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
+
+    override val viewModel by viewModels<MainViewModel>()
+    private val adapter by lazy {
+        ContactsAdapter(
+            onItemClick = { openContactDetails(it) },
+            onDeleteItemClick = { viewModel.onContactDelete(it) },
+            onEditItemClick = ::navigateToEditContact
+        )
     }
 
-    private lateinit var viewModel: MainViewModel
+    private var isPortraitOrientation = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    override fun initUI() {
+        defineOrientation()
+        setupContactList()
+        setupListeners()
+        subscribe()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    private fun defineOrientation() {
+        isPortraitOrientation = requireActivity().resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE
     }
 
+    private fun setupContactList() = withBinding {
+        rvContacts.layoutManager = if (isPortraitOrientation) {
+            LinearLayoutManager(requireContext())
+        } else {
+            GridLayoutManager(requireContext(), SPAN_COLUMN_FOR_LANDSCAPE)
+        }
+    }
+
+    private fun setupListeners() = withBinding {
+        rvContacts.adapter = adapter
+        ivImportContactsXml.onClick(::pickContactsXmlFile)
+        ivImportContactsJson.onClick(::pickContactsJsonFile)
+        ivExportContactsXml.onClick(viewModel::exportContactsToXml)
+        ivExportContactsJson.onClick(viewModel::exportContactsToJson)
+        fabAddContact.onClick(::navigateToAddingNewContact)
+        searchInput.onSearchQueryChanged(viewModel::setSearchQuery)
+    }
+
+    private fun subscribe() {
+        viewModel.getContacts().observe(viewLifecycleOwner) { displayContacts(it) }
+        viewModel.toastLiveEvent.observe(viewLifecycleOwner) { showToast(it) }
+    }
+
+    private fun displayContacts(contacts: List<Contact>) = withBinding {
+        adapter.setData(contacts)
+        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
+        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
+        searchInput.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
+        rvContacts.setVisibleOrGone(contacts.isNotEmpty())
+        clNoContacts.setVisibleOrGone(contacts.isEmpty())
+    }
+
+    override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
+        FragmentMainBinding.inflate(inflater, container, false)
+
+    private fun pickContactsXmlFile() {
+        xmlFileResultLauncher.launch(getXmlFilePickerIntent())
+    }
+
+    private fun pickContactsJsonFile() {
+        jsonFileResultLauncher.launch(getJsonFilePickerIntent())
+    }
+
+    private fun onXmlFilePicked(uri: Uri) {
+        binding?.searchInput?.clear()
+        viewModel.loadContactsFromXml(requireContext(), uri)
+    }
+
+    private fun onJsonFilePicked(uri: Uri) {
+        binding?.searchInput?.clear()
+        viewModel.loadContactsFromJson(requireContext(), uri)
+    }
+
+    private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
+    private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
+
+    private fun openContactDetails(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.openContactDetails(customerId))
+    }
+
+    private fun navigateToAddingNewContact() {
+        findNavController().navigate(MainFragmentDirections.toEditContact(null) )
+    }
+
+    private fun navigateToEditContact(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.toEditContact(customerId))
+    }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.appaddressbook.ui.main.MainFragment"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/toEditContact"
+            app:destination="@id/editContactFragment" />
+        <action
+            android:id="@+id/openContactDetails"
+            app:destination="@+id/contactDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editContactFragment"
+        android:name="com.example.appaddressbook.ui.edit_contact.EditContactFragment"
+        tools:layout="@layout/fragment_edit_contact" >
+        <argument
+            android:name="customerId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactDetailsFragment"
+        android:name="com.example.appaddressbook.ui.contact_details.ContactDetailsFragment"
+        tools:layout="@layout/fragment_contact_details">
+        <argument
+            android:name="customerId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
