@@ -27,7 +27,7 @@ class EditContactViewModel @Inject constructor(
     fun loadContact(customerId: String) {
         isNewContact = false
         if (contactToEditEvent.value == null) {
-            repository.getContact(customerId)?.let { contact ->
+            repository.getContactById(customerId)?.let { contact ->
                 contactToEditEvent.postValue(contact)
             }
         }
