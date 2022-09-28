@@ -54,6 +54,7 @@ class EditContactFragment : BaseBindingFragment<FragmentEditContactBinding, Edit
 
     private fun subscribe() {
         viewModel.contactToEditEvent.observe(viewLifecycleOwner, ::displayContactInfo)
+        viewModel.toastLiveEvent.observe(viewLifecycleOwner) { showToast(it) }
         viewModel.successfulAdding.observe(viewLifecycleOwner) { onContactAdded() }
         viewModel.successfulEdited.observe(viewLifecycleOwner) { onContactEdited() }
     }
@@ -75,20 +76,7 @@ class EditContactFragment : BaseBindingFragment<FragmentEditContactBinding, Edit
     }
 
     private fun onSaveClick() {
-        val contact = makeContact()
-        if (contactFieldsValidation(contact)) {
-            if (isNewContact) {
-                viewModel.addNewContact(contact)
-            } else {
-                viewModel.editContact(contact)
-            }
-        } else {
-            showToast(R.string.error_message_customerId_required)
-        }
-    }
-
-    private fun contactFieldsValidation(contact: Contact): Boolean {
-        return contact.customerId.isNotBlank()
+        viewModel.saveContact(makeContact())
     }
 
     private fun makeContact() = Contact(
