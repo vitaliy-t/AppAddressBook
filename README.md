@@ -4,6 +4,7 @@ It's a simple application to manage a list of contacts.
 The app includes next features:
 * Import / export contacts from XML file (from device's external storage)
 * Import/export contacts from JSON file (from device's external storage)
+* Search contact by its name
 * Add new contact
 * Update contact info
 * Delete contact
