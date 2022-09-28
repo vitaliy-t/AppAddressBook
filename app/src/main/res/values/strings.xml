@@ -9,7 +9,7 @@
     <string name="exported_to_xml_message">Contacts exported to XML file</string>
     <string name="exported_to_json_message">Contacts exported to JSON file</string>
     <string name="label_no_contacts">Contacts are not imported.</string>
-    <string name="search_hint">Search query</string>
+    <string name="search_hint">Search by name</string>
     <string name="parse_xml_error">Error while parsing XML file</string>
     <string name="parse_json_error">Error while parsing JSON file</string>
     <string name="xml_format">XML</string>
@@ -19,6 +19,27 @@
     <!--Shortcuts-->
     <string name="add_contact">Add new contact</string>
     <!--/Shortcuts-->
+
+    <!--Add/Edit contact-->
+    <string name="new_contact_title">New contact</string>
+    <string name="edit_contact_title">Edit contact</string>
+    <string name="not_specified_hint">None</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="company_name">Company name</string>
+    <string name="contact_name">Contact name</string>
+    <string name="contact_title">Contact title</string>
+    <string name="contact_address">Address</string>
+    <string name="contact_city">City</string>
+    <string name="contact_email">Email</string>
+    <string name="contact_region">Region</string>
+    <string name="contact_postal_code">Postal code</string>
+    <string name="contact_country">Country</string>
+    <string name="contact_phone">Phone</string>
+    <string name="contact_fax">Fax</string>
+    <string name="error_message_customerId_required">Customer ID Required</string>
+    <string name="contact_added_message">New contact added</string>
+    <string name="contact_edited_message">Contact edited</string>
+    <!--Add/Edit contact-->
 
     <!--ContactDetailsFragment-->
     <string name="label_company_name">Company Name:</string>

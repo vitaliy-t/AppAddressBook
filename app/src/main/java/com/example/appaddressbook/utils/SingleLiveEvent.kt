@@ -35,3 +35,10 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         super.postValue(t)
     }
 }
+
+/**
+ * Used for cases where T is Unit, to make calls cleaner.
+ */
+fun SingleLiveEvent<Unit>.call() {
+    setValue(Unit)
+}

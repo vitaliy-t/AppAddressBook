@@ -18,6 +18,8 @@ import com.example.appaddressbook.utils.setVisibleOrGone
 import com.example.appaddressbook.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val SPAN_COLUMN_FOR_LANDSCAPE = 2
+
 @AndroidEntryPoint
 class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
@@ -26,7 +28,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         ContactsAdapter(
             onItemClick = { openContactDetails(it) },
             onDeleteItemClick = { viewModel.onContactDelete(it) },
-            onEditItemClick = { }
+            onEditItemClick = ::navigateToEditContact
         )
     }
 
@@ -47,7 +49,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         rvContacts.layoutManager = if (isPortraitOrientation) {
             LinearLayoutManager(requireContext())
         } else {
-            GridLayoutManager(requireContext(), 2)
+            GridLayoutManager(requireContext(), SPAN_COLUMN_FOR_LANDSCAPE)
         }
     }
 
@@ -57,6 +59,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         ivImportContactsJson.onClick(::pickContactsJsonFile)
         ivExportContactsXml.onClick(viewModel::exportContactsToXml)
         ivExportContactsJson.onClick(viewModel::exportContactsToJson)
+        fabAddContact.onClick(::navigateToAddingNewContact)
         searchInput.onSearchQueryChanged(viewModel::setSearchQuery)
     }
 
@@ -67,15 +70,11 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun displayContacts(contacts: List<Contact>) = withBinding {
         adapter.setData(contacts)
-        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty())
-        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty())
+        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
+        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
         searchInput.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
         rvContacts.setVisibleOrGone(contacts.isNotEmpty())
         clNoContacts.setVisibleOrGone(contacts.isEmpty())
-    }
-
-    private fun openContactDetails(customerId: String) {
-        findNavController().navigate(MainFragmentDirections.openContactDetails(customerId))
     }
 
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
@@ -101,4 +100,16 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
     private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
+
+    private fun openContactDetails(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.openContactDetails(customerId))
+    }
+
+    private fun navigateToAddingNewContact() {
+        findNavController().navigate(MainFragmentDirections.toEditContact(null) )
+    }
+
+    private fun navigateToEditContact(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.toEditContact(customerId))
+    }
 }

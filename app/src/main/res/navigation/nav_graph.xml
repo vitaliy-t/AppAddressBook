@@ -8,10 +8,23 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.appaddressbook.ui.main.MainFragment"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/toEditContact"
+            app:destination="@id/editContactFragment" />
         <action
             android:id="@+id/openContactDetails"
             app:destination="@+id/contactDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editContactFragment"
+        android:name="com.example.appaddressbook.ui.edit_contact.EditContactFragment"
+        tools:layout="@layout/fragment_edit_contact" >
+        <argument
+            android:name="customerId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment

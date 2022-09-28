@@ -23,7 +23,7 @@ class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
 
     override fun addContact(contact: Contact) {
         val contacts = contactsLiveData.value ?: mutableListOf()
-        (contacts as MutableList).add(contact)
+        (contacts as MutableList).add(0, contact)
         contactsLiveData.value = contacts
     }
 

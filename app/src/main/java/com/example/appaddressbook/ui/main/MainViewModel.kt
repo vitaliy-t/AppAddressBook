@@ -99,7 +99,6 @@ class MainViewModel @Inject constructor(
     }
 
     private fun filterCondition(contact: Contact, searchQuery: String): Boolean {
-        return contact.contactName?.contains(searchQuery, ignoreCase = true) == true ||
-                contact.companyName?.contains(searchQuery, ignoreCase = true) == true
+        return contact.contactName?.contains(searchQuery, ignoreCase = true) == true
     }
 }
