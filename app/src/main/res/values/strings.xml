@@ -11,4 +11,8 @@
     <string name="parse_xml_error">Error while parsing xml file</string>
     <!--/MainFragment-->
 
+    <!--Shortcuts-->
+    <string name="add_contact">Add new contact</string>
+    <!--/Shortcuts-->
+
 </resources>
