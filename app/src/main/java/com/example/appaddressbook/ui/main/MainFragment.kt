@@ -12,10 +12,7 @@ import com.example.appaddressbook.base.BaseBindingFragment
 import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.databinding.FragmentMainBinding
 import com.example.appaddressbook.ui.main.adapter.ContactsAdapter
-import com.example.appaddressbook.utils.onClick
-import com.example.appaddressbook.utils.registererFilePicker
-import com.example.appaddressbook.utils.setVisibleOrGone
-import com.example.appaddressbook.utils.showToast
+import com.example.appaddressbook.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val SPAN_COLUMN_FOR_LANDSCAPE = 2
@@ -57,8 +54,8 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         rvContacts.adapter = adapter
         ivImportContactsXml.onClick(::pickContactsXmlFile)
         ivImportContactsJson.onClick(::pickContactsJsonFile)
-        ivExportContactsXml.onClick(viewModel::exportContactsToXml)
-        ivExportContactsJson.onClick(viewModel::exportContactsToJson)
+        ivExportContactsXml.onClick(::onExportIntoXmlClick)
+        ivExportContactsJson.onClick(::onExportIntoJsonClick)
         fabAddContact.onClick(::navigateToAddingNewContact)
         searchInput.onSearchQueryChanged(viewModel::setSearchQuery)
     }
@@ -79,6 +76,18 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
         FragmentMainBinding.inflate(inflater, container, false)
+
+    private fun onExportIntoXmlClick() {
+        requestWriteExternalStoragePermission {
+            if (it) { viewModel.exportContactsToXml() }
+        }
+    }
+
+    private fun onExportIntoJsonClick() {
+        requestWriteExternalStoragePermission {
+            if (it) { viewModel.exportContactsToJson() }
+        }
+    }
 
     private fun pickContactsXmlFile() {
         xmlFileResultLauncher.launch(getXmlFilePickerIntent())
