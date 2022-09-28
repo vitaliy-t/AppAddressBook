@@ -18,6 +18,8 @@ import com.example.appaddressbook.utils.setVisibleOrGone
 import com.example.appaddressbook.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val SPAN_COLUMN_FOR_LANDSCAPE = 2
+
 @AndroidEntryPoint
 class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
@@ -47,7 +49,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         rvContacts.layoutManager = if (isPortraitOrientation) {
             LinearLayoutManager(requireContext())
         } else {
-            GridLayoutManager(requireContext(), 2)
+            GridLayoutManager(requireContext(), SPAN_COLUMN_FOR_LANDSCAPE)
         }
     }
 
