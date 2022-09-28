@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -41,10 +42,16 @@ android {
 
 dependencies {
 
+    def nav_version = "2.5.2"
+
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Navigation component
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
@@ -64,6 +71,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4"
     implementation("javax.xml.stream:stax-api:1.0-2")
+
+    // RxBinding
+    implementation "com.jakewharton.rxbinding4:rxbinding-core:4.0.0"
 
     //hilt
     implementation 'com.google.dagger:hilt-android:2.43.2'

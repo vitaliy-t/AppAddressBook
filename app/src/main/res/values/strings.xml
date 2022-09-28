@@ -5,8 +5,18 @@
     <string name="label_contacts_book">Contacts book</string>
     <string name="open_contacts">Import contacts</string>
     <string name="export_contacts">Export contacts</string>
-    <string name="exported_message">Contacts exported</string>
+    <string name="exported_to_xml_message">Contacts exported to XML file</string>
+    <string name="exported_to_json_message">Contacts exported to JSON file</string>
     <string name="label_no_contacts">Contacts are not imported.</string>
+    <string name="search_hint">Search query</string>
+    <string name="parse_xml_error">Error while parsing XML file</string>
+    <string name="parse_json_error">Error while parsing JSON file</string>
+    <string name="xml_format">XML</string>
+    <string name="json_format">JSON</string>
     <!--/MainFragment-->
+
+    <!--Shortcuts-->
+    <string name="add_contact">Add new contact</string>
+    <!--/Shortcuts-->
 
 </resources>

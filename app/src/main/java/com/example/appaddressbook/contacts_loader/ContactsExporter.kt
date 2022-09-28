@@ -1,39 +1,34 @@
 package com.example.appaddressbook.contacts_loader
 
 import android.os.Environment
-import com.ctc.wstx.stax.WstxInputFactory
-import com.ctc.wstx.stax.WstxOutputFactory
 import com.example.appaddressbook.data.models.AddressBook
 import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.utils.getFormattedCurrentDate
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
-import com.fasterxml.jackson.dataformat.xml.XmlFactory
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import java.io.File
+import javax.inject.Inject
 
-class ContactsExporter {
+private const val XML_EXTENSION = "xml"
+private const val JSON_EXTENSION = "json"
 
-    private val xmlFactory = XmlFactory.builder()
-        .xmlInputFactory(WstxInputFactory())
-        .xmlOutputFactory(WstxOutputFactory())
-        .build()
+class ContactsExporter @Inject constructor (
+    private val xmlMapper: AddressBookXmlMapper,
+    private val jsonMapper: AddressBookJsonMapper,
+) {
 
-    private val kotlinXmlMapper = XmlMapper(xmlFactory, JacksonXmlModule().apply {
-        setDefaultUseWrapper(false)
-    }).registerKotlinModule()
-
-    fun exportContacts(contact: List<Contact>) {
-        kotlinXmlMapper.writeValue(generateFilePathForExport(), AddressBook(contact))
+    fun exportContactsToXml(contact: List<Contact>) {
+        xmlMapper.mapToXml(AddressBook(contact), generateXmlFilePathForExport(XML_EXTENSION))
     }
 
-    private fun generateFilePathForExport(): File {
+    fun exportContactsToJson(contact: List<Contact>) {
+        jsonMapper.mapToJson(AddressBook(contact), generateXmlFilePathForExport(JSON_EXTENSION))
+    }
+
+    private fun generateXmlFilePathForExport(extension: String): File {
         val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         if (dir != null && !dir.exists()) {
             dir.mkdirs()
         }
-        return File(dir, "contacts_${getFormattedCurrentDate()}.xml")
-
+        return File(dir, "contacts_${getFormattedCurrentDate()}.$extension")
     }
 
 }

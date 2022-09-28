@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="addContact"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_black"
+        android:shortcutShortLabel="@string/add_contact"
+        android:shortcutLongLabel="@string/add_contact"
+        android:shortcutDisabledMessage="@string/add_contact">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.appaddressbook"
+            android:targetClass="com.example.appaddressbook.MainActivity">
+
+            <extra
+                 android:name="addNewContact"
+                 android:value="true"/>
+
+        </intent>
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

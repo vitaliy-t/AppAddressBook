@@ -27,47 +27,127 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivImportContacts"
+                app:layout_constraintEnd_toStartOf="@id/ivImportContactsXml"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivImportContacts"
+                android:id="@+id/ivImportContactsXml"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/dimen_8"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivExportContacts"
+                app:layout_constraintEnd_toStartOf="@id/ivImportContactsJson"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_download"
                 app:tint="@color/white" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivImportContactsXml"
+                app:layout_constraintEnd_toEndOf="@id/ivImportContactsXml"
+                app:layout_constraintTop_toTopOf="@id/ivImportContactsXml"
+                android:textColor="@color/white"
+                android:text="@string/xml_format"/>
+
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivExportContacts"
+                android:id="@+id/ivImportContactsJson"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                app:layout_constraintEnd_toStartOf="@id/ivExportContactsXml"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_download"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivImportContactsJson"
+                app:layout_constraintEnd_toEndOf="@id/ivImportContactsJson"
+                app:layout_constraintTop_toTopOf="@id/ivImportContactsJson"
+                android:textColor="@color/white"
+                android:text="@string/json_format"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivExportContactsXml"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
                 android:layout_marginEnd="@dimen/dimen_16"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/dimen_8"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivExportContactsJson"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_export"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivExportContactsXml"
+                app:layout_constraintEnd_toEndOf="@id/ivExportContactsXml"
+                app:layout_constraintTop_toTopOf="@id/ivExportContactsXml"
+                android:textColor="@color/white"
+                android:text="@string/xml_format"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivExportContactsJson"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/dimen_8"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_export"
                 app:tint="@color/white" />
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_30"
+                app:layout_constraintStart_toStartOf="@id/ivExportContactsJson"
+                app:layout_constraintEnd_toEndOf="@id/ivExportContactsJson"
+                app:layout_constraintTop_toTopOf="@id/ivExportContactsJson"
+                android:textColor="@color/white"
+                android:text="@string/json_format"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.example.appaddressbook.ui.custom_views.SearchView
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginHorizontal="@dimen/dimen_8"
+            app:layout_constraintTop_toBottomOf="@id/clHeader"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvContacts"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:paddingBottom="@dimen/dimen_80"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:supports_change_animations="@{false}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clHeader"
-            tools:listitem="@layout/item_contact" />
+            app:layout_constraintTop_toBottomOf="@id/search_input"
+            tools:listitem="@layout/item_contact"
+            tools:itemCount="15"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clNoContacts"

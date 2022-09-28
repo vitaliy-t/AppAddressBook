@@ -1,15 +1,18 @@
 package com.example.appaddressbook.ui.main
 
-import android.app.Activity
+import android.content.res.Configuration
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appaddressbook.base.BaseBindingFragment
 import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.databinding.FragmentMainBinding
 import com.example.appaddressbook.ui.main.adapter.ContactsAdapter
 import com.example.appaddressbook.utils.onClick
+import com.example.appaddressbook.utils.registererFilePicker
 import com.example.appaddressbook.utils.setVisibleOrGone
 import com.example.appaddressbook.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,15 +29,34 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         )
     }
 
+    private var isPortraitOrientation = true
+
     override fun initUI() {
+        defineOrientation()
+        setupContactList()
         setupListeners()
         subscribe()
     }
 
+    private fun defineOrientation() {
+        isPortraitOrientation = requireActivity().resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE
+    }
+
+    private fun setupContactList() = withBinding {
+        rvContacts.layoutManager = if (isPortraitOrientation) {
+            LinearLayoutManager(requireContext())
+        } else {
+            GridLayoutManager(requireContext(), 2)
+        }
+    }
+
     private fun setupListeners() = withBinding {
         rvContacts.adapter = adapter
-        ivImportContacts.onClick(::pickContactsFile)
-        ivExportContacts.onClick(viewModel::exportContacts)
+        ivImportContactsXml.onClick(::pickContactsXmlFile)
+        ivImportContactsJson.onClick(::pickContactsJsonFile)
+        ivExportContactsXml.onClick(viewModel::exportContactsToXml)
+        ivExportContactsJson.onClick(viewModel::exportContactsToJson)
+        searchInput.onSearchQueryChanged(viewModel::setSearchQuery)
     }
 
     private fun subscribe() {
@@ -44,7 +66,9 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private fun displayContacts(contacts: List<Contact>) = withBinding {
         adapter.setData(contacts)
-        ivExportContacts.setVisibleOrGone(contacts.isNotEmpty())
+        ivExportContactsXml.setVisibleOrGone(contacts.isNotEmpty())
+        ivExportContactsJson.setVisibleOrGone(contacts.isNotEmpty())
+        searchInput.setVisibleOrGone(contacts.isNotEmpty() || searchInput.isNotEmpty)
         rvContacts.setVisibleOrGone(contacts.isNotEmpty())
         clNoContacts.setVisibleOrGone(contacts.isEmpty())
     }
@@ -52,17 +76,26 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
         FragmentMainBinding.inflate(inflater, container, false)
 
-    private fun pickContactsFile() {
-        activityResultLauncher.launch(getFilePickerIntent())
+    private fun pickContactsXmlFile() {
+        xmlFileResultLauncher.launch(getXmlFilePickerIntent())
     }
 
-    private var activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val uri = result.data?.data ?: return@registerForActivityResult
-                viewModel.loadContacts(requireContext(), uri)
-            }
-        }
+    private fun pickContactsJsonFile() {
+        jsonFileResultLauncher.launch(getJsonFilePickerIntent())
+    }
+
+    private fun onXmlFilePicked(uri: Uri) {
+        binding?.searchInput?.clear()
+        viewModel.loadContactsFromXml(requireContext(), uri)
+    }
+
+    private fun onJsonFilePicked(uri: Uri) {
+        binding?.searchInput?.clear()
+        viewModel.loadContactsFromJson(requireContext(), uri)
+    }
+
+    private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
+    private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
 
     companion object {
         fun newInstance() = MainFragment()

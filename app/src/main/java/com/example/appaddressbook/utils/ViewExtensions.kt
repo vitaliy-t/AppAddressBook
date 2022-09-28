@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 
 const val MIN_CLICK_INTERVAL: Long = 300
 const val MIN_LONG_CLICK_INTERVAL: Long = 1000
@@ -51,6 +52,10 @@ fun View.showKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     this.requestFocus()
     imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun EditText.clear() {
+    text?.clear()
 }
 
 operator fun ViewGroup.get(position: Int): View? = getChildAt(position)
