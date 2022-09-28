@@ -6,7 +6,6 @@ import com.example.appaddressbook.data.models.Contact
 import com.example.appaddressbook.repository.ContactsRepository
 import com.example.appaddressbook.utils.SingleLiveEvent
 import com.example.appaddressbook.utils.call
-import com.example.appaddressbook.utils.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
