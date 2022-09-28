@@ -45,7 +45,8 @@ class EditContactViewModel @Inject constructor(
     }
 
     private fun contactFieldsValidation(contact: Contact): Boolean {
-        return contact.customerId.isNotBlank()
+        return contact.customerId.isNotBlank() &&
+                !contact.contactName.isNullOrBlank()
     }
 
     private fun addNewContact(contact: Contact) {

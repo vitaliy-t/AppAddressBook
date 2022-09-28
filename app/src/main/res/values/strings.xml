@@ -36,7 +36,7 @@
     <string name="contact_country">Country</string>
     <string name="contact_phone">Phone</string>
     <string name="contact_fax">Fax</string>
-    <string name="error_message_customerId_required">Customer ID Required</string>
+    <string name="error_message_customerId_required">Customer ID and contact name are required</string>
     <string name="contact_added_message">New contact added</string>
     <string name="contact_edited_message">Contact edited</string>
     <!--Add/Edit contact-->
