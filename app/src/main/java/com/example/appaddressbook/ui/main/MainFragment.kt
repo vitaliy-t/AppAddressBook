@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appaddressbook.base.BaseBindingFragment
@@ -23,7 +24,7 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
     override val viewModel by viewModels<MainViewModel>()
     private val adapter by lazy {
         ContactsAdapter(
-            onItemClick = {},
+            onItemClick = { openContactDetails(it) },
             onDeleteItemClick = { viewModel.onContactDelete(it) },
             onEditItemClick = { }
         )
@@ -73,6 +74,10 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
         clNoContacts.setVisibleOrGone(contacts.isEmpty())
     }
 
+    private fun openContactDetails(customerId: String) {
+        findNavController().navigate(MainFragmentDirections.openContactDetails(customerId))
+    }
+
     override fun attachBinding(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) =
         FragmentMainBinding.inflate(inflater, container, false)
 
@@ -96,8 +101,4 @@ class MainFragment : BaseBindingFragment<FragmentMainBinding, MainViewModel>() {
 
     private val xmlFileResultLauncher = registererFilePicker(::onXmlFilePicked)
     private val jsonFileResultLauncher = registererFilePicker(::onJsonFilePicked)
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 }
